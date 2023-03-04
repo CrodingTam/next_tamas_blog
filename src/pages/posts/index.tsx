@@ -1,14 +1,13 @@
-import FeaturedPosts from "@/components/home-page/FeaturedPosts";
-import Hero from "@/components/home-page/Hero";
+import AllPosts from "@/components/posts/AllPosts";
 import { PostItemProps } from "@/components/posts/PostItem";
-import { getFeaturedPosts } from "lib/posts-util";
+import { getAllPosts, getFeaturedPosts } from "lib/posts-util";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import React, { Fragment } from "react";
-interface HomePageProps {
-    posts: any;
-}
+import React from "react";
 
+interface AllPostPageProps {
+    posts: any
+}
 
 const DUMMY_POSTS: PostItemProps[] = [
     {
@@ -41,33 +40,27 @@ const DUMMY_POSTS: PostItemProps[] = [
     },
 ];
 
-const HomePage: React.FC<HomePageProps> = (props) => {
-    
+const AllPostsPage: React.FC<AllPostPageProps> = (props) => {
     return (
-        <Fragment>
+        <div>
             <Head>
-                <title>Tamás&apos;s Blog</title>
-                <meta 
-                    name="description" 
-                    content="I post about programming" 
-                />
+                <title>All my Posts</title>
+                <meta name="description" content="List of all programming tutorial" />
             </Head>
-            <Hero />
-            <FeaturedPosts posts={props.posts}/>
-        </Fragment>
+            <AllPosts posts={props.posts}/>
+        </div>
     )
 }
 
-export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
-    const featuredPosts = getFeaturedPosts();
+export const getStaticProps: GetStaticProps = async () => {
+    const allPosts = getAllPosts();
 
     return {
         props: {
-            posts: featuredPosts
+            posts: allPosts
         },
         revalidate: 600
     }
 }
 
-
-export default HomePage;
+export default AllPostsPage;
